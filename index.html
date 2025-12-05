@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Chocolatada Minecraft</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: VT323 para estilo pixelado legible -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Configuración de Fuente Pixelada */
+        body {
+            font-family: 'VT323', monospace;
+        }
+
+        /* Fondo Animado de Bloques */
+        .minecraft-bg {
+            background-color: #3b2818; /* Marrón tierra */
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h64v64H0z' fill='%235d4037' fill-opacity='0.4'/%3E%3Cpath d='M8 8h8v8H8zM24 8h8v8h-8zM40 8h8v8h-8zM56 8h8v8h-8zM0 24h8v8H0zM16 24h8v8h-8zM32 24h8v8h-8zM48 24h8v8h-8zM8 40h8v8H8zM24 40h8v8h-8zM40 40h8v8h-8zM56 40h8v8h-8zM0 56h8v8H0zM16 56h8v8h-8zM32 56h8v8h-8zM48 56h8v8h-8z' fill='%233e2723' fill-opacity='0.4'/%3E%3C/svg%3E");
+        }
+
+        /* Botón estilo Minecraft */
+        .btn-minecraft {
+            box-shadow: inset -4px -4px 0px 0px rgba(0,0,0,0.5), inset 4px 4px 0px 0px rgba(255,255,255,0.5);
+            transition: transform 0.1s;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewport="0 0 24 24" fill="white"><path d="M12 2L2 22h20L12 2z"/></svg>'), auto;
+        }
+        .btn-minecraft:active {
+            box-shadow: inset 4px 4px 0px 0px rgba(0,0,0,0.5), inset -4px -4px 0px 0px rgba(255,255,255,0.2);
+            transform: translateY(4px);
+        }
+
+        /* Animación de flotación para items */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Partículas de nieve/vapor */
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: white;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: snowfall 10s linear infinite;
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #555;
+            border: 2px solid #1a1a1a;
+        }
+    </style>
+</head>
+<body class="minecraft-bg min-h-screen text-white overflow-x-hidden flex flex-col items-center justify-center p-4">
+
+    <!-- Efecto de Nieve/Ambiente -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Contenedor Principal -->
+    <main class="relative z-10 w-full max-w-3xl">
+
+        <!-- NUEVO: Árbol de Navidad Grande a la derecha -->
+        <div class="absolute top-1/4 -right-32 md:-right-52 lg:-right-80 floating hidden md:block pointer-events-none" style="animation-delay: 1.5s; z-index: 0;">
+            <svg width="300" height="300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-lg">
+                <path d="M12 2L15 5H9L12 2Z" fill="#2E7D32" stroke="black" stroke-width="1"/> <!-- Estrella/Tope -->
+                <path d="M12 5L16 9H8L12 5Z" fill="#388E3C" stroke="black" stroke-width="1"/> <!-- Capa 1 -->
+                <path d="M12 9L17 14H7L12 9Z" fill="#43A047" stroke="black" stroke-width="1"/> <!-- Capa 2 -->
+                <path d="M12 14L18 20H6L12 14Z" fill="#4CAF50" stroke="black" stroke-width="1"/> <!-- Capa 3 -->
+                <rect x="11" y="20" width="2" height="3" fill="#795548" stroke="black" stroke-width="1"/> <!-- Tronco -->
+                <!-- Ornamentos -->
+                <rect x="11.5" y="7.5" width="1" height="1" fill="#FDD835"/>
+                <rect x="14" y="11.5" width="1" height="1" fill="#E53935"/>
+                <rect x="9" y="12.5" width="1" height="1" fill="#039BE5"/>
+                <rect x="15.5" y="17.5" width="1" height="1" fill="#FDD835"/>
+                <rect x="7.5" y="18.5" width="1" height="1" fill="#E53935"/>
+            </svg>
+        </div>
+
+        <!-- NUEVO: Regalo Grande a la izquierda -->
+        <div class="absolute bottom-1/4 -left-24 md:-left-40 lg:-left-60 floating hidden md:block pointer-events-none" style="animation-delay: 2.5s; z-index: 0;">
+            <svg width="180" height="180" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-lg">
+                <rect x="4" y="7" width="16" height="14" fill="#D32F2F" stroke="black" stroke-width="1.5"/> <!-- Caja Roja -->
+                <rect x="11" y="7" width="2" height="14" fill="#FDD835" stroke="black" stroke-width="1"/> <!-- Cinta Vertical -->
+                <rect x="4" y="13" width="16" height="2" fill="#FDD835" stroke="black" stroke-width="1"/> <!-- Cinta Horizontal -->
+                <path d="M11 7H9V5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H13" fill="#FDD835" stroke="black" stroke-width="1"/> <!-- Lazo -->
+            </svg>
+        </div>
+        
+        <!-- Header con Título -->
+        <div class="text-center mb-8 relative">
+            <h1 class="text-6xl md:text-8xl text-yellow-400 drop-shadow-[4px_4px_0_rgba(0,0,0,0.8)] mb-2 floating">
+                GRAN CHOCOLATADA
+            </h1>
+            <h2 class="text-3xl md:text-4xl text-gray-300 drop-shadow-[2px_2px_0_rgba(0,0,0,0.8)]">
+                MINECRAFT EDITION
+            </h2>
+            
+            <!-- Items decorativos (SVGs inline simples) -->
+            <div class="absolute -top-10 -left-4 md:-left-16 floating" style="animation-delay: 1s;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="#8B4513" stroke="black" stroke-width="2">
+                    <path d="M6 9h12v9a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4V9z" />
+                    <path d="M18 11h2a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2h-2" />
+                    <path d="M7 5c0-1.5 1-2 1-2s1 1 1 2" stroke="#ddd" fill="none"/>
+                    <path d="M11 4c0-1.5 1-2 1-2s1 1 1 2" stroke="#ddd" fill="none"/>
+                    <path d="M15 5c0-1.5 1-2 1-2s1 1 1 2" stroke="#ddd" fill="none"/>
+                </svg>
+            </div>
+            <!-- ELIMINADO: El árbol pequeño de aquí -->
+            <div class="absolute -bottom-4 -right-4 md:-right-16 floating" style="animation-delay: 2s;">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="#5D4037" stroke="black" stroke-width="1.5">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <path d="M8 8h3v3H8z" fill="#3E2723"/>
+                    <path d="M14 12h2v2h-2z" fill="#3E2723"/>
+                </svg>
+            </div>
+            <!-- ELIMINADO: El regalo pequeño de aquí -->
+        </div>
+
+        <!-- Tarjeta de Información -->
+        <div class="bg-gray-800/90 border-4 border-gray-500 p-6 md:p-10 text-center shadow-2xl backdrop-blur-sm relative z-10">
+                    <path d="M11 7H9V5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H13" fill="#FDD835" stroke="black" stroke-width="1"/> <!-- Lazo -->
+                </svg>
+            </div>
+        </div>
+
+        <!-- Tarjeta de Información -->
+        <div class="bg-gray-800/90 border-4 border-gray-500 p-6 md:p-10 text-center shadow-2xl backdrop-blur-sm">
+            
+            <p class="text-2xl text-gray-300 mb-6 leading-relaxed">
+                ¡Estás invitado a compartir, construir y beber chocolate virtual con toda la comunidad! Trae tu mejor skin navideña.
+            </p>
+
+            <!-- Datos del Evento -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-xl">
+                <div class="bg-black/40 p-4 border-2 border-gray-600">
+                    <div class="flex items-center justify-center gap-2 text-yellow-400 mb-1">
+                        <i data-lucide="calendar"></i>
+                        <span>FECHA</span>
+                    </div>
+                    <p>Sábado, 20 Diciembre</p>
+                </div>
+                <div class="bg-black/40 p-4 border-2 border-gray-600">
+                    <div class="flex items-center justify-center gap-2 text-yellow-400 mb-1">
+                        <i data-lucide="clock"></i>
+                        <span>HORA</span>
+                    </div>
+                    <p>18:00 PM (Hora Local)</p>
+                </div>
+            </div>
+
+            <!-- Server IP Copy -->
+            <div class="mb-10">
+                <p class="text-gray-400 mb-2">IP DEL SERVIDOR</p>
+                <div class="flex flex-col md:flex-row gap-2 justify-center items-center">
+                    <code id="server-ip" class="bg-black text-green-400 px-6 py-3 text-2xl border-2 border-gray-600 tracking-wider">
+                        chocolatada.server.net
+                    </code>
+                    <button onclick="copyIp()" class="btn-minecraft bg-blue-600 hover:bg-blue-500 text-white px-4 py-3 border-2 border-blue-800 font-bold uppercase flex items-center gap-2">
+                        <i data-lucide="copy" class="w-5 h-5"></i> Copiar IP
+                    </button>
+                </div>
+                <p id="copy-msg" class="text-green-400 text-lg mt-2 opacity-0 transition-opacity">¡IP Copiada al portapapeles!</p>
+            </div>
+
+            <hr class="border-gray-600 mb-8 border-2 border-dashed">
+
+            <!-- Sección de Mods -->
+            <div class="bg-stone-900/80 p-6 border-4 border-yellow-700 relative overflow-hidden group">
+                <!-- Brillo de fondo -->
+                <div class="absolute inset-0 bg-yellow-600 opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                
+                <h3 class="text-3xl text-yellow-500 mb-2 drop-shadow-md">PACK DE MODS OBLIGATORIO</h3>
+                <p class="text-gray-400 mb-6 text-xl">Necesitas estos mods para ver las tazas de chocolate y los gorros navideños.</p>
+                
+                <!-- BOTÓN PRINCIPAL DE DESCARGA -->
+                <!-- REEMPLAZA EL HREF CON TU LINK REAL -->
+                <button onclick="downloadMods()" class="btn-minecraft w-full md:w-auto bg-green-600 hover:bg-green-500 text-white text-3xl px-8 py-6 border-b-8 border-r-8 border-green-800 active:border-b-0 active:border-r-0 active:mt-2 transition-all flex items-center justify-center gap-4 mx-auto">
+                    <i data-lucide="package-open" class="w-8 h-8"></i>
+                    DESCARGAR MODS (.ZIP)
+                </button>
+                <p class="text-sm text-gray-500 mt-4 font-sans">Versión 1.20.1 • Forge • 45MB</p>
+            </div>
+
+        </div>
+
+        <footer class="text-center mt-8 text-gray-500 text-lg">
+            <p>Creado para la comunidad • ¡No faltes!</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Función para copiar IP
+        function copyIp() {
+            const ipText = document.getElementById('server-ip').innerText;
+            navigator.clipboard.writeText(ipText).then(() => {
+                const msg = document.getElementById('copy-msg');
+                msg.classList.remove('opacity-0');
+                setTimeout(() => {
+                    msg.classList.add('opacity-0');
+                }, 2000);
+            });
+        }
+
+        // Función para simular/realizar descarga
+        function downloadMods() {
+            // AQUÍ PUEDES PONER TU LINK REAL. Ejemplo:
+            // window.location.href = "https://www.mediafire.com/file/tu_archivo.zip";
+            
+            // COMO DEMOSTRACIÓN: Descarga un archivo de texto
+            const textContent = `
+=== INSTRUCCIONES DE INSTALACIÓN ===
+
+1. Este es un archivo de prueba generado por la web.
+2. Para que funcione con tus amigos, el dueño de la web debe editar el archivo 'index.html'.
+3. Debe buscar la función 'downloadMods()' y poner el link de Mediafire o Google Drive real.
+
+¡Nos vemos en la chocolatada!
+            `;
+            
+            const blob = new Blob([textContent], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "LEEME_PARA_INSTALAR_MODS.txt"; // Simula el nombre del zip
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert("¡Descarga iniciada! (Este es un archivo demo, edita el código HTML para poner tu link real)");
+        }
+
+        // Generar partículas de nieve
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posición aleatoria
+                particle.style.left = Math.random() * 100 + 'vw';
+                // Tamaño aleatorio para profundidad
+                const size = Math.random() * 6 + 4 + 'px';
+                particle.style.width = size;
+                particle.style.height = size;
+                // Retraso aleatorio
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                // Duración aleatoria
+                particle.style.animationDuration = Math.random() * 5 + 5 + 's';
+
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
