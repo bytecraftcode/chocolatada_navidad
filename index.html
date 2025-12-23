@@ -234,28 +234,7 @@
             // AQUÍ PUEDES PONER TU LINK REAL. Ejemplo:
              window.location.href = "https://mega.nz/folder/vhwyhTJQ#jcZJfxMn3UsEBieL6Wg63Q";
             
-            // COMO DEMOSTRACIÓN: Descarga un archivo de texto
-            const textContent = `
-=== INSTRUCCIONES DE INSTALACIÓN ===
-
-1. Este es un archivo de prueba generado por la web.
-2. Para que funcione con tus amigos, el dueño de la web debe editar el archivo 'index.html'.
-3. Debe buscar la función 'downloadMods()' y poner el link de Mediafire o Google Drive real.
-
-¡Nos vemos en la chocolatada!
-            `;
-            
-            const blob = new Blob([textContent], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = "LEEME_PARA_INSTALAR_MODS.txt"; // Simula el nombre del zip
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-            alert("¡Descarga iniciada! (Este es un archivo demo, edita el código HTML para poner tu link real)");
+          
         }
 
         // Generar partículas de nieve
@@ -287,3 +266,4 @@
 </body>
 
 </html>
+
